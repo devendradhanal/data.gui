@@ -106,7 +106,9 @@ dat.utils.common = (function () {
     
     each: function(obj, itr, scope) {
 
-      if (!obj) return;
+      if (!obj) {
+        return;
+      }
 
       if (ARR_EACH && obj.forEach && obj.forEach === ARR_EACH) { 
         
@@ -780,8 +782,6 @@ dat.controllers.NumberController = (function (Controller, common) {
          */
         step: function(v) {
           this.__step = v;
-          this.__impliedStep = v;
-          this.__precision = numDecimals(v);
           return this;
         }
 
@@ -1822,7 +1822,6 @@ dat.GUI = dat.gui.GUI = (function (css, saveDialogueContents, styleSheet, contro
                 localStorage.setItem(getLocalStorageHash(_this, 'isLocal'), bool);
               }
             }
-
           }
 
         });
@@ -1932,12 +1931,11 @@ dat.GUI = dat.gui.GUI = (function (css, saveDialogueContents, styleSheet, contro
     }
 
     saveToLocalStorage = function () {
-      if (SUPPORTS_LOCAL_STORAGE && localStorage.getItem(getLocalStorageHash(_this, 'isLocal')) === 'true') {
+      if (SUPPORTS_LOCAL_STORAGE && localStorage.getItem(getLocalStorageHash(this, 'isLocal')) === 'true') {
         localStorage.setItem(getLocalStorageHash(_this, 'gui'), JSON.stringify(_this.getSaveObject()));
       }
     }
 
-    // expose this method publicly
     this.saveToLocalStorageIfPossible = saveToLocalStorage;
 
     var root = _this.getRoot();
@@ -1952,8 +1950,7 @@ dat.GUI = dat.gui.GUI = (function (css, saveDialogueContents, styleSheet, contro
 	    if (!params.parent) {
 	      resetWidth();
 	    }
-
-  };
+    };
 
   GUI.toggleHide = function() {
 
@@ -2236,8 +2233,11 @@ dat.GUI = dat.gui.GUI = (function (css, saveDialogueContents, styleSheet, contro
 
           this.load.remembered[this.preset] = getCurrentPreset(this);
           markPresetModified(this, false);
+          
+          
           this.saveToLocalStorageIfPossible();
-
+        
+          
         },
 
         saveAs: function(presetName) {
@@ -2253,7 +2253,9 @@ dat.GUI = dat.gui.GUI = (function (css, saveDialogueContents, styleSheet, contro
           this.load.remembered[presetName] = getCurrentPreset(this);
           this.preset = presetName;
           addPresetOption(this, presetName, true);
+          
           this.saveToLocalStorageIfPossible();
+          
 
         },
 
